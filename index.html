@@ -8,35 +8,40 @@
 </head>
 <body>
     <div class="container">
-        <h1>Washing Machine Scheduler</h1>
-        
-        <!-- Section for displaying machine availability -->
-        <section id="machines">
-            <h2>Available Machines</h2>
-            <!-- Machine data will be dynamically inserted here -->
+        <h1>Hostel Washing Machine Scheduler</h1>
+
+        <!-- Washing machine status section -->
+        <section id="machine-status">
+            <h2>Washing Machine Status</h2>
+            <div id="machine-info">
+                <p>Status: <span id="machine-status-text">Available</span></p>
+                <p id="current-user"></p>
+                <p id="time-estimate"></p>
+            </div>
         </section>
 
-        <!-- Form to schedule a washing machine -->
+        <!-- Schedule form -->
         <section id="scheduler">
-            <h2>Schedule a Machine</h2>
+            <h2>Schedule a Washing Machine Time Slot</h2>
             <form id="schedule-form">
                 <label for="name">Your Name:</label>
                 <input type="text" id="name" required>
+
                 <label for="room">Room Number:</label>
                 <input type="text" id="room" required>
-                <label for="time">Time Slot:</label>
-                <input type="time" id="time" required>
+
+                <label for="time">Estimated Completion Time (in minutes):</label>
+                <input type="number" id="time" required>
+
                 <button type="submit">Schedule</button>
             </form>
         </section>
 
-        <!-- Section to report an issue -->
-        <section id="report">
+        <!-- Report issue form -->
+        <section id="report-issue">
             <h2>Report an Issue</h2>
-            <form id="report-form">
-                <input type="text" id="report-name" placeholder="Your Name" required>
-                <input type="text" id="report-room" placeholder="Room Number" required>
-                <textarea id="issue" placeholder="Describe the issue" required></textarea>
+            <form id="issue-form">
+                <textarea id="issue" placeholder="Describe the issue..." required></textarea>
                 <button type="submit">Report Issue</button>
             </form>
         </section>
