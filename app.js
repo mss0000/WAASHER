@@ -1,56 +1,56 @@
-// Simulating API data for washing machines
-let machinesData = [
-    { id: 1, status: 'available', user: null, room: null },
-    { id: 2, status: 'in use', user: 'John Doe', room: '202' },
-    { id: 3, status: 'available', user: null, room: null }
-];
+// Simulate the washing machine data
+let machineStatus = "Available";
+let currentUser = null;
+let completionTime = null;
 
-// Simulate updating machine data (In real use, this would be from an API)
+// Function to update the machine status
 function updateMachineStatus() {
-    const machinesDiv = document.getElementById('machines');
-    machinesDiv.innerHTML = '';
-    machinesData.forEach(machine => {
-        machinesDiv.innerHTML += `
-            <div class="machine">
-                <h3>Washing Machine ${machine.id}</h3>
-                <p>Status: ${machine.status}</p>
-                ${machine.status === 'in use' ? `<p>By: ${machine.user} (Room ${machine.room})</p>` : ''}
-            </div>
-        `;
-    });
+    const statusText = document.getElementById('machine-status-text');
+    const currentUserText = document.getElementById('current-user');
+    const timeEstimateText = document.getElementById('time-estimate');
+
+    statusText.textContent = machineStatus;
+    if (currentUser) {
+        currentUserText.textContent = `Currently used by: ${currentUser.name} (Room ${currentUser.room})`;
+        timeEstimateText.textContent = `Estimated completion time: ${completionTime} minutes`;
+    } else {
+        currentUserText.textContent = '';
+        timeEstimateText.textContent = '';
+    }
 }
 
-// Poll every 5 seconds for status updates
-setInterval(updateMachineStatus, 5000);
-
-// Handle scheduling a machine
+// Handle the schedule form submission
 document.getElementById('schedule-form').addEventListener('submit', function(event) {
     event.preventDefault();
+
     const name = document.getElementById('name').value;
     const room = document.getElementById('room').value;
     const time = document.getElementById('time').value;
 
-    // Schedule the first available machine (for demonstration)
-    const availableMachine = machinesData.find(machine => machine.status === 'available');
-    if (availableMachine) {
-        availableMachine.status = 'in use';
-        availableMachine.user = name;
-        availableMachine.room = room;
-        alert(`Washing machine ${availableMachine.id} scheduled at ${time}`);
+    if (machineStatus === "Available") {
+        machineStatus = "In Use";
+        currentUser = { name, room };
+        completionTime = time;
+
+        alert(`Washing machine scheduled for ${name} (Room ${room}) for ${time} minutes.`);
+
+        // Update the machine status
+        updateMachineStatus();
     } else {
-        alert('No available machines. Please try again later.');
+        alert('The washing machine is currently in use. Please wait until it is available.');
     }
-    updateMachineStatus();
 });
 
-// Handle issue reporting
-document.getElementById('report-form').addEventListener('submit', function(event) {
+// Handle the issue reporting form
+document.getElementById('issue-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    const name = document.getElementById('report-name').value;
-    const room = document.getElementById('report-room').value;
     const issue = document.getElementById('issue').value;
 
-    // Simulating report submission (In real use, you would send this to a backend)
-    alert(`Issue reported by ${name} (Room ${room}): ${issue}`);
-    document.getElementById('report-form').reset();
+    alert(`Issue reported: ${issue}. We'll look into it!`);
+
+    // Clear the form after submission
+    document.getElementById('issue-form').reset();
 });
+
+// Initial update of machine status
+updateMachineStatus();
