@@ -3,41 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Washing Machine Scheduler</title>
+    <title>Hostel Washing Machine Scheduler</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Hostel Washing Machine Scheduler</h1>
 
-        <!-- Washing machine status section -->
-        <section id="machine-status">
-            <h2>Washing Machine Status</h2>
-            <div id="machine-info">
-                <p>Status: <span id="machine-status-text">Available</span></p>
-                <p id="current-user"></p>
-                <p id="time-estimate"></p>
-            </div>
-        </section>
-
-        <!-- Schedule form -->
-        <section id="scheduler">
-            <h2>Schedule a Washing Machine Time Slot</h2>
-            <form id="schedule-form">
-                <label for="name">Your Name:</label>
-                <input type="text" id="name" required>
+        <!-- Registration/Login -->
+        <section id="registration">
+            <h2>Resident Registration/Login</h2>
+            <form id="registration-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
 
                 <label for="room">Room Number:</label>
                 <input type="text" id="room" required>
 
-                <label for="time">Estimated Completion Time (in minutes):</label>
-                <input type="number" id="time" required>
-
-                <button type="submit">Schedule</button>
+                <button type="submit">Register/Login</button>
             </form>
         </section>
 
-        <!-- Report issue form -->
+        <!-- Available Time Slots -->
+        <section id="scheduler">
+            <h2>Available Time Slots</h2>
+            <ul id="slots-list">
+                <!-- Time slots will be listed here -->
+            </ul>
+
+            <form id="schedule-form">
+                <label for="slot">Choose a Slot:</label>
+                <select id="slot" required>
+                    <!-- Dynamically populated with available slots -->
+                </select>
+
+                <button type="submit">Book Slot</button>
+            </form>
+        </section>
+
+        <!-- User Actions -->
+        <section id="user-actions">
+            <h2>Your Schedule</h2>
+            <ul id="user-schedule">
+                <!-- User's booked schedule will appear here -->
+            </ul>
+            <button id="delete-schedule">Delete Schedule</button>
+            <button id="request-free-slot">Request User to Free Slot</button>
+        </section>
+
+        <!-- Report Issue Form -->
         <section id="report-issue">
             <h2>Report an Issue</h2>
             <form id="issue-form">
