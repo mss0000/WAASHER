@@ -23,7 +23,6 @@ body {
 h1, h2 {
     text-align: center;
     color: #333;
-    margin-top: 0;
     margin-bottom: 20px;
 }
 
@@ -38,7 +37,7 @@ label {
     font-weight: bold;
 }
 
-input[type="text"], input[type="number"], select, textarea {
+input[type="text"], input[type="datetime-local"], input[type="number"], textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -75,31 +74,12 @@ li {
     margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-#user-schedule li {
-    background-color: #e9ffe9; /* Different color for user's own bookings */
-}
-
-/* Slot Options Styling */
-select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    font-size: 16px;
-}
-
-/* Issue Report Text Area */
+/* Report Issue Textarea */
 textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    resize: vertical; /* Allow vertical resizing */
-    height: 100px; /* Set a reasonable height for the text area */
+    height: 100px;
+    resize: vertical;
 }
 
 /* Responsive Design */
@@ -108,7 +88,7 @@ textarea {
         padding: 15px;
         max-width: 95%;
     }
-
+    
     button {
         font-size: 14px;
     }
