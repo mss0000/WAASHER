@@ -12,8 +12,15 @@ let currentUser = null;
 // Register or login the resident
 document.getElementById('registration-form').addEventListener('submit', function(event) {
     event.preventDefault();
+    
     const username = document.getElementById('username').value;
     const room = document.getElementById('room').value;
+
+    // Validate inputs
+    if (!username || !room) {
+        alert('Please enter both username and room number.');
+        return;
+    }
 
     currentUser = { username, room };
     if (!residents.some(resident => resident.username === username)) {
@@ -38,6 +45,13 @@ function updateSlotOptions() {
             slotSelect.appendChild(option);
         }
     });
+
+    // If no slots are available
+    if (slotSelect.options.length === 0) {
+        const noSlotsOption = document.createElement('option');
+        noSlotsOption.textContent = 'No slots available';
+        slotSelect.appendChild(noSlotsOption);
+    }
 }
 
 // Display the user's current schedule
@@ -45,17 +59,10 @@ function updateUserSchedule() {
     const userScheduleList = document.getElementById('user-schedule');
     userScheduleList.innerHTML = ''; // Clear the list
 
-    slots.forEach(slot => {
-        if (slot.bookedBy && slot.bookedBy.username === currentUser.username) {
-            const listItem = document.createElement('li');
-            listItem.textContent = `Your booking: ${slot.time}`;
-            userScheduleList.appendChild(listItem);
-        }
-    });
-
-    if (userScheduleList.innerHTML === '') {
+    const userSlot = slots.find(slot => slot.bookedBy && slot.bookedBy.username === currentUser.username);
+    if (userSlot) {
         const listItem = document.createElement('li');
-        listItem.textContent = 'No bookings found.';
+        listItem.textContent = `Your booking: ${userSlot.time}`;
         userScheduleList.appendChild(listItem);
     }
 }
@@ -63,33 +70,40 @@ function updateUserSchedule() {
 // Book a time slot
 document.getElementById('schedule-form').addEventListener('submit', function(event) {
     event.preventDefault();
+
+    if (!currentUser) {
+        alert('Please log in first.');
+        return;
+    }
+
     const slotIndex = document.getElementById('slot').value;
 
-    if (currentUser) {
-        const selectedSlot = slots[slotIndex];
-        if (selectedSlot.available) {
-            selectedSlot.available = false;
-            selectedSlot.bookedBy = currentUser;
-
-            alert(`You have successfully booked the slot: ${selectedSlot.time}`);
-            updateSlotOptions();
-            updateUserSchedule();
-        } else {
-            alert('This slot is already booked. Please choose another slot.');
-        }
-    } else {
-        alert('Please log in first.');
+    // Check if slotIndex is valid
+    if (isNaN(slotIndex) || !slots[slotIndex] || !slots[slotIndex].available) {
+        alert('Please choose a valid and available time slot.');
+        return;
     }
+
+    const selectedSlot = slots[slotIndex];
+    selectedSlot.available = false;
+    selectedSlot.bookedBy = currentUser;
+
+    alert(`You have successfully booked the slot: ${selectedSlot.time}`);
+    updateSlotOptions();
+    updateUserSchedule();
 });
 
 // Delete the user's schedule
 document.getElementById('delete-schedule').addEventListener('click', function() {
-    const userSlots = slots.filter(slot => slot.bookedBy && slot.bookedBy.username === currentUser.username);
-    if (userSlots.length > 0) {
-        userSlots.forEach(slot => {
-            slot.available = true;
-            slot.bookedBy = null;
-        });
+    if (!currentUser) {
+        alert('Please log in first.');
+        return;
+    }
+
+    const userSlot = slots.find(slot => slot.bookedBy && slot.bookedBy.username === currentUser.username);
+    if (userSlot) {
+        userSlot.available = true;
+        userSlot.bookedBy = null;
         alert('Your schedule has been deleted.');
         updateSlotOptions();
         updateUserSchedule();
@@ -111,10 +125,16 @@ document.getElementById('request-free-slot').addEventListener('click', function(
 // Handle issue reporting
 document.getElementById('issue-form').addEventListener('submit', function(event) {
     event.preventDefault();
+
     const issue = document.getElementById('issue').value;
+    if (!issue) {
+        alert('Please describe the issue.');
+        return;
+    }
+
     alert(`Issue reported: ${issue}. We'll look into it!`);
     document.getElementById('issue-form').reset();
 });
 
-// Initial load
+// Initial load of available slots
 updateSlotOptions();
