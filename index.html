@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washing Machine Scheduler</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Washing Machine Scheduler</h1>
+        
+        <!-- Section for displaying machine availability -->
+        <section id="machines">
+            <h2>Available Machines</h2>
+            <!-- Machine data will be dynamically inserted here -->
+        </section>
+
+        <!-- Form to schedule a washing machine -->
+        <section id="scheduler">
+            <h2>Schedule a Machine</h2>
+            <form id="schedule-form">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" required>
+                <label for="room">Room Number:</label>
+                <input type="text" id="room" required>
+                <label for="time">Time Slot:</label>
+                <input type="time" id="time" required>
+                <button type="submit">Schedule</button>
+            </form>
+        </section>
+
+        <!-- Section to report an issue -->
+        <section id="report">
+            <h2>Report an Issue</h2>
+            <form id="report-form">
+                <input type="text" id="report-name" placeholder="Your Name" required>
+                <input type="text" id="report-room" placeholder="Room Number" required>
+                <textarea id="issue" placeholder="Describe the issue" required></textarea>
+                <button type="submit">Report Issue</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
