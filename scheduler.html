@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washing Machine Scheduler</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Washing Machine Scheduler</h1>
+
+        <!-- Current bookings -->
+        <section id="current-bookings">
+            <h2>Current Bookings</h2>
+            <ul id="bookings-list"></ul>
+        </section>
+
+        <!-- Schedule a new slot -->
+        <section id="scheduler">
+            <h2>Book a Time Slot</h2>
+            <form id="schedule-form">
+                <label for="time">Start Time:</label>
+                <input type="datetime-local" id="time" required>
+                <label for="duration">Duration (in minutes):</label>
+                <input type="number" id="duration" required>
+                <button type="submit">Book Slot</button>
+            </form>
+        </section>
+
+        <!-- Manage own bookings -->
+        <section id="manage-bookings">
+            <h2>Your Booking</h2>
+            <ul id="user-booking"></ul>
+            <button id="delete-booking">Delete Booking</button>
+            <button id="edit-booking">Edit Booking</button>
+        </section>
+
+        <!-- Report stolen slot -->
+        <section id="report-issue">
+            <h2>Report an Issue</h2>
+            <form id="issue-form">
+                <textarea id="issue" placeholder="Describe the issue..." required></textarea>
+                <button type="submit">Report Issue</button>
+            </form>
+        </section>
+
+    </div>
+
+    <script src="scheduler.js"></script>
+</body>
+</html>
