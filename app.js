@@ -45,10 +45,17 @@ function updateUserSchedule() {
     const userScheduleList = document.getElementById('user-schedule');
     userScheduleList.innerHTML = ''; // Clear the list
 
-    const userSlot = slots.find(slot => slot.bookedBy && slot.bookedBy.username === currentUser.username);
-    if (userSlot) {
+    slots.forEach(slot => {
+        if (slot.bookedBy && slot.bookedBy.username === currentUser.username) {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Your booking: ${slot.time}`;
+            userScheduleList.appendChild(listItem);
+        }
+    });
+
+    if (userScheduleList.innerHTML === '') {
         const listItem = document.createElement('li');
-        listItem.textContent = `Your booking: ${userSlot.time}`;
+        listItem.textContent = 'No bookings found.';
         userScheduleList.appendChild(listItem);
     }
 }
@@ -60,12 +67,16 @@ document.getElementById('schedule-form').addEventListener('submit', function(eve
 
     if (currentUser) {
         const selectedSlot = slots[slotIndex];
-        selectedSlot.available = false;
-        selectedSlot.bookedBy = currentUser;
+        if (selectedSlot.available) {
+            selectedSlot.available = false;
+            selectedSlot.bookedBy = currentUser;
 
-        alert(`You have successfully booked the slot: ${selectedSlot.time}`);
-        updateSlotOptions();
-        updateUserSchedule();
+            alert(`You have successfully booked the slot: ${selectedSlot.time}`);
+            updateSlotOptions();
+            updateUserSchedule();
+        } else {
+            alert('This slot is already booked. Please choose another slot.');
+        }
     } else {
         alert('Please log in first.');
     }
@@ -73,10 +84,12 @@ document.getElementById('schedule-form').addEventListener('submit', function(eve
 
 // Delete the user's schedule
 document.getElementById('delete-schedule').addEventListener('click', function() {
-    const userSlot = slots.find(slot => slot.bookedBy && slot.bookedBy.username === currentUser.username);
-    if (userSlot) {
-        userSlot.available = true;
-        userSlot.bookedBy = null;
+    const userSlots = slots.filter(slot => slot.bookedBy && slot.bookedBy.username === currentUser.username);
+    if (userSlots.length > 0) {
+        userSlots.forEach(slot => {
+            slot.available = true;
+            slot.bookedBy = null;
+        });
         alert('Your schedule has been deleted.');
         updateSlotOptions();
         updateUserSchedule();
